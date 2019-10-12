@@ -388,9 +388,9 @@ class StreamWriter(Codec):
 
         """ Flushes and resets the codec buffers used for keeping state.
 
-            Calling this method should ensure that the data on the
+            Calling this method should ensure that the tmp on the
             output is put into a clean state, that allows appending
-            of new fresh data without having to rescan the whole
+            of new fresh tmp without having to rescan the whole
             stream to recover state.
 
         """
@@ -450,11 +450,11 @@ class StreamReader(Codec):
 
     def read(self, size=-1, chars=-1, firstline=False):
 
-        """ Decodes data from the stream self.stream and returns the
+        """ Decodes tmp from the stream self.stream and returns the
             resulting object.
 
             chars indicates the number of decoded code points or bytes to
-            return. read() will never return more data than requested,
+            return. read() will never return more tmp than requested,
             but it might return less, if there is not enough available.
 
             size indicates the approximate maximum number of decoded
@@ -470,7 +470,7 @@ class StreamReader(Codec):
             next call to read().
 
             The method should use a greedy read strategy, meaning that
-            it should read as much data as is allowed within the
+            it should read as much tmp as is allowed within the
             definition of the encoding and the given size, e.g.  if
             optional encoding endings or state markers are available
             on the stream, these should be read too.
@@ -491,7 +491,7 @@ class StreamReader(Codec):
             if chars >= 0:
                 if len(self.charbuffer) >= chars:
                     break
-            # we need more data
+            # we need more tmp
             if size < 0:
                 newdata = self.stream.read()
             else:
@@ -515,7 +515,7 @@ class StreamReader(Codec):
             self.bytebuffer = data[decodedbytes:]
             # put new characters in the character buffer
             self.charbuffer += newchars
-            # there was no data available
+            # there was no tmp available
             if not newdata:
                 break
         if chars < 0:
@@ -531,7 +531,7 @@ class StreamReader(Codec):
     def readline(self, size=None, keepends=True):
 
         """ Read one line from the input stream and return the
-            decoded data.
+            decoded tmp.
 
             size, if given, is passed as size argument to the
             read() method.
@@ -543,7 +543,7 @@ class StreamReader(Codec):
             line = self.linebuffer[0]
             del self.linebuffer[0]
             if len(self.linebuffer) == 1:
-                # revert to charbuffer mode; we might need more data
+                # revert to charbuffer mode; we might need more tmp
                 # next time
                 self.charbuffer = self.linebuffer[0]
                 self.linebuffer = None
@@ -754,7 +754,7 @@ class StreamReaderWriter:
 
 class StreamRecoder:
 
-    """ StreamRecoder instances translate data from one encoding to another.
+    """ StreamRecoder instances translate tmp from one encoding to another.
 
         They use the complete set of APIs returned by the
         codecs.lookup() function to implement their task.
@@ -764,7 +764,7 @@ class StreamRecoder:
         written to the underlying stream using an instance of the provided
         Writer class.
 
-        In the other direction, data is read from the underlying stream using
+        In the other direction, tmp is read from the underlying stream using
         a Reader instance and then encoded and returned to the caller.
 
     """
@@ -777,8 +777,8 @@ class StreamRecoder:
 
         """ Creates a StreamRecoder instance which implements a two-way
             conversion: encode and decode work on the frontend (the
-            data visible to .read() and .write()) while Reader and Writer
-            work on the backend (the data in stream).
+            tmp visible to .read() and .write()) while Reader and Writer
+            work on the backend (the tmp in stream).
 
             You can use these objects to do transparent
             transcodings from e.g. latin-1 to utf-8 and back.
@@ -911,7 +911,7 @@ def EncodedFile(file, data_encoding, file_encoding=None, errors='strict'):
 
         Data written to the wrapped file is decoded according
         to the given data_encoding and then encoded to the underlying
-        file using file_encoding. The intermediate data type
+        file using file_encoding. The intermediate tmp type
         will usually be Unicode but depends on the specified codecs.
 
         Bytes read from the file are decoded using file_encoding and then

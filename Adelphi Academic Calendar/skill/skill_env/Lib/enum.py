@@ -460,7 +460,7 @@ class EnumMeta(type):
                         return base
 
         # ensure final parent class is an Enum derivative, find any concrete
-        # data type, and check that Enum has no members
+        # tmp type, and check that Enum has no members
         first_enum = bases[-1]
         if not issubclass(first_enum, Enum):
             raise TypeError("new enumerations should be created as "
@@ -475,7 +475,7 @@ class EnumMeta(type):
         """Returns the __new__ to be used for creating the enum members.
 
         classdict: the class dictionary given to __new__
-        member_type: the data type whose __new__ will be used by default
+        member_type: the tmp type whose __new__ will be used by default
         first_enum: enumeration to check for an overriding __new__
 
         """

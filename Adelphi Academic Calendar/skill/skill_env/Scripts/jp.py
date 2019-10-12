@@ -13,11 +13,11 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('expression')
     parser.add_argument('-f', '--filename',
-                        help=('The filename containing the input data.  '
-                              'If a filename is not given then data is '
+                        help=('The filename containing the input tmp.  '
+                              'If a filename is not given then tmp is '
                               'read from stdin.'))
     parser.add_argument('--ast', action='store_true',
-                        help=('Pretty print the AST, do not search the data.'))
+                        help=('Pretty print the AST, do not search the tmp.'))
     args = parser.parse_args()
     expression = args.expression
     if args.ast:

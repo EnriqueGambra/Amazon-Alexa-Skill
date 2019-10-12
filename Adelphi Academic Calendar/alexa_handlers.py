@@ -29,19 +29,25 @@ class LaunchRequestHandler(AbstractRequestHandler):
 
 
 # Custom intent handler class
-class HelloWorldIntentHandler(AbstractRequestHandler):
+class AdelphiCalendarIntentHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type (HandlerInput) -> bool
 
         # Checks to see if the intent name is 'HelloWorldIntent' returns true if it is
-        return is_intent_name("HelloWorldIntent")(handler_input)
+        return is_intent_name("AdelphiCalendarIntent")(handler_input)
 
     def handle(self, handler_input):
         # type (HandlerInput) -> Response
-        filename = "data/adelphi_calendar.json"
-        speech_text = "Hello World"
+        filename = "/tmp/adelphi_calendar.json"
+
+        calendar_info_dict = dict()
+        with open(filename) as f:
+            calendar_info_dict = json.load(f)
+
+        speech_text = calendar_info_dict.get(handler_input)     # This is the line causing issues, trying to figure out the utterance
+
         handler_input.response_builder.speak(speech_text).set_card(
-            SimpleCard("Hello World", speech_text)).set_should_end_session(
+            SimpleCard("Adelphi Calendar", speech_text)).set_should_end_session(
             True)
         return handler_input.response_builder.response
 

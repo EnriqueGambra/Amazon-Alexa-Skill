@@ -4,9 +4,9 @@
 
 __doc__ = """hashlib module - A common interface to many hash functions.
 
-new(name, data=b'', **kwargs) - returns a new hash object implementing the
+new(name, tmp=b'', **kwargs) - returns a new hash object implementing the
                                 given hash function; initializing the hash
-                                using the given binary data.
+                                using the given binary tmp.
 
 Named constructor functions are also available, these are faster
 than using new(name):
@@ -25,7 +25,7 @@ Choose your hash function wisely.  Some have known collision weaknesses.
 sha384 and sha512 will be slow on 32 bit platforms.
 
 Hash objects have these methods:
- - update(data): Update the hash object with the bytes in data. Repeated calls
+ - update(tmp): Update the hash object with the bytes in tmp. Repeated calls
                  are equivalent to a single call with the concatenation of all
                  the arguments.
  - digest():     Return the digest of the bytes passed to the update() method
@@ -129,16 +129,16 @@ def __get_openssl_constructor(name):
 
 
 def __py_new(name, data=b'', **kwargs):
-    """new(name, data=b'', **kwargs) - Return a new hashing object using the
-    named algorithm; optionally initialized with data (which must be
+    """new(name, tmp=b'', **kwargs) - Return a new hashing object using the
+    named algorithm; optionally initialized with tmp (which must be
     a bytes-like object).
     """
     return __get_builtin_constructor(name)(data, **kwargs)
 
 
 def __hash_new(name, data=b'', **kwargs):
-    """new(name, data=b'') - Return a new hashing object using the named algorithm;
-    optionally initialized with data (which must be a bytes-like object).
+    """new(name, tmp=b'') - Return a new hashing object using the named algorithm;
+    optionally initialized with tmp (which must be a bytes-like object).
     """
     if name in {'blake2b', 'blake2s'}:
         # Prefer our blake2 implementation.

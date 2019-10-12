@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 
-"""Base16, Base32, Base64 (RFC 3548), Base85 and Ascii85 data encodings"""
+"""Base16, Base32, Base64 (RFC 3548), Base85 and Ascii85 tmp encodings"""
 
 # Modified 04-Oct-1995 by Jack Jansen to use binascii module
 # Modified 30-Dec-2003 by Barry Warsaw to add full RFC 3548 support
@@ -29,7 +29,7 @@ __all__ = [
     ]
 
 
-bytes_types = (bytes, bytearray)  # Types acceptable as binary data
+bytes_types = (bytes, bytearray)  # Types acceptable as binary tmp
 
 def _bytes_from_decode_data(s):
     if isinstance(s, str):
@@ -516,14 +516,14 @@ def _input_type_check(s):
                                           (m.format, s.__class__.__name__))
         raise TypeError(msg)
     if m.ndim != 1:
-        msg = ("expected 1-D data, not %d-D data from %s" %
+        msg = ("expected 1-D tmp, not %d-D tmp from %s" %
                                           (m.ndim, s.__class__.__name__))
         raise TypeError(msg)
 
 
 def encodebytes(s):
     """Encode a bytestring into a bytes object containing multiple lines
-    of base-64 data."""
+    of base-64 tmp."""
     _input_type_check(s)
     pieces = []
     for i in range(0, len(s), MAXBINSIZE):
@@ -541,7 +541,7 @@ def encodestring(s):
 
 
 def decodebytes(s):
-    """Decode a bytestring of base-64 data into a bytes object."""
+    """Decode a bytestring of base-64 tmp into a bytes object."""
     _input_type_check(s)
     return binascii.a2b_base64(s)
 

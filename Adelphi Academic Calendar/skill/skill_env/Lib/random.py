@@ -454,7 +454,7 @@ class Random(_random.Random):
 ## -------------------- von Mises distribution --------------------
 
     def vonmisesvariate(self, mu, kappa):
-        """Circular data distribution.
+        """Circular tmp distribution.
 
         mu is the mean angle, expressed in radians between 0 and 2*pi, and
         kappa is the concentration parameter, which must be greater than or

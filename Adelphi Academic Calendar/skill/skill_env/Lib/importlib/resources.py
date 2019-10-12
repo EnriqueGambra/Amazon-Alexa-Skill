@@ -287,11 +287,11 @@ class _ZipImportResourceReader(resources_abc.ResourceReader):
     def resource_path(self, resource):
         # All resources are in the zip file, so there is no path to the file.
         # Raising FileNotFoundError tells the higher level API to extract the
-        # binary data and create a temporary file.
+        # binary tmp and create a temporary file.
         raise FileNotFoundError
 
     def is_resource(self, name):
-        # Maybe we could do better, but if we can get the data, it's a
+        # Maybe we could do better, but if we can get the tmp, it's a
         # resource.  Otherwise it isn't.
         fullname_as_path = self.fullname.replace('.', '/')
         path = f'{fullname_as_path}/{name}'

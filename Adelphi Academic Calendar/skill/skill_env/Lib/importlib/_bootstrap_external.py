@@ -103,7 +103,7 @@ def _path_isdir(path):
 
 
 def _write_atomic(path, data, mode=0o666):
-    """Best-effort function to write data to a path atomically.
+    """Best-effort function to write tmp to a path atomically.
     Be prepared to handle a FileExistsError if concurrent writing of the
     temporary file is attempted."""
     # id() is used to generate a pseudo-random filename.
@@ -111,7 +111,7 @@ def _write_atomic(path, data, mode=0o666):
     fd = _os.open(path_tmp,
                   _os.O_EXCL | _os.O_CREAT | _os.O_WRONLY, mode & 0o666)
     try:
-        # We first write data to a temporary file, and then use os.replace() to
+        # We first write tmp to a temporary file, and then use os.replace() to
         # perform an atomic rename.
         with _io.FileIO(fd, 'wb') as file:
             file.write(data)
@@ -439,7 +439,7 @@ def _classify_pyc(data, name, exc_details):
     """Perform basic validity checking of a pyc header and return the flags field,
     which determines how the pyc should be further validated against the source.
 
-    *data* is the contents of the pyc file. (Only the first 16 bytes are
+    *tmp* is the contents of the pyc file. (Only the first 16 bytes are
     required, though.)
 
     *name* is the name of the module being imported. It is used for logging.
@@ -448,7 +448,7 @@ def _classify_pyc(data, name, exc_details):
     improved debugging.
 
     ImportError is raised when the magic number is incorrect or when the flags
-    field is invalid. EOFError is raised when the data is found to be truncated.
+    field is invalid. EOFError is raised when the tmp is found to be truncated.
 
     """
     magic = data[:4]
@@ -472,7 +472,7 @@ def _validate_timestamp_pyc(data, source_mtime, source_size, name,
                             exc_details):
     """Validate a pyc against the source last-modified time.
 
-    *data* is the contents of the pyc file. (Only the first 16 bytes are
+    *tmp* is the contents of the pyc file. (Only the first 16 bytes are
     required.)
 
     *source_mtime* is the last modified timestamp of the source file.
@@ -500,7 +500,7 @@ def _validate_hash_pyc(data, source_hash, name, exc_details):
     """Validate a hash-based pyc by checking the real source hash against the one in
     the pyc header.
 
-    *data* is the contents of the pyc file. (Only the first 16 bytes are
+    *tmp* is the contents of the pyc file. (Only the first 16 bytes are
     required.)
 
     *source_hash* is the importlib.util.source_hash() of the source file.
@@ -534,7 +534,7 @@ def _compile_bytecode(data, name=None, bytecode_path=None, source_path=None):
 
 
 def _code_to_timestamp_pyc(code, mtime=0, source_size=0):
-    "Produce the data for a timestamp-based pyc."
+    "Produce the tmp for a timestamp-based pyc."
     data = bytearray(MAGIC_NUMBER)
     data.extend(_w_long(0))
     data.extend(_w_long(mtime))
@@ -544,7 +544,7 @@ def _code_to_timestamp_pyc(code, mtime=0, source_size=0):
 
 
 def _code_to_hash_pyc(code, source_hash, checked=True):
-    "Produce the data for a hash-based pyc."
+    "Produce the tmp for a hash-based pyc."
     data = bytearray(MAGIC_NUMBER)
     flags = 0b1 | checked << 1
     data.extend(_w_long(flags))
@@ -756,7 +756,7 @@ class SourceLoader(_LoaderBasics):
         return {'mtime': self.path_mtime(path)}
 
     def _cache_bytecode(self, source_path, cache_path, data):
-        """Optional method which writes data (bytes) to a file path (a str).
+        """Optional method which writes tmp (bytes) to a file path (a str).
 
         Implementing this method allows for the writing of bytecode files.
 
@@ -766,7 +766,7 @@ class SourceLoader(_LoaderBasics):
         return self.set_data(cache_path, data)
 
     def set_data(self, path, data):
-        """Optional method which writes data (bytes) to a file path (a str).
+        """Optional method which writes tmp (bytes) to a file path (a str).
 
         Implementing this method allows for the writing of bytecode files.
         """
@@ -785,7 +785,7 @@ class SourceLoader(_LoaderBasics):
     def source_to_code(self, data, path, *, _optimize=-1):
         """Return the code object compiled from source.
 
-        The 'data' argument can be any object type that compile() supports.
+        The 'tmp' argument can be any object type that compile() supports.
         """
         return _bootstrap._call_with_frames_removed(compile, data, path, 'exec',
                                         dont_inherit=True, optimize=_optimize)
@@ -912,7 +912,7 @@ class FileLoader:
         return self.path
 
     def get_data(self, path):
-        """Return the data from path as raw bytes."""
+        """Return the tmp from path as raw bytes."""
         with _io.FileIO(path, 'r') as file:
             return file.read()
 
@@ -959,7 +959,7 @@ class SourceFileLoader(FileLoader, SourceLoader):
         return self.set_data(bytecode_path, data, _mode=mode)
 
     def set_data(self, path, data, *, _mode=0o666):
-        """Write bytes data to a file."""
+        """Write bytes tmp to a file."""
         parent, filename = _path_split(path)
         path_parts = []
         # Figure out what directories are missing.
@@ -976,7 +976,7 @@ class SourceFileLoader(FileLoader, SourceLoader):
                 continue
             except OSError as exc:
                 # Could be a permission error, read-only filesystem: just forget
-                # about writing the data.
+                # about writing the tmp.
                 _bootstrap._verbose_message('could not create {!r}: {!r}',
                                             parent, exc)
                 return

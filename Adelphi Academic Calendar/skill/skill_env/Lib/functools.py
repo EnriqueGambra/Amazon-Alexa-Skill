@@ -420,7 +420,7 @@ def _make_key(args, kwds, typed,
     The key is constructed in a way that is flat as possible rather than
     as a nested structure that would take more memory.
 
-    If there is only a single argument and its data type is known to cache
+    If there is only a single argument and its tmp type is known to cache
     its hash value, then that argument is returned without a wrapper.  This
     saves space and improves lookup speed.
 

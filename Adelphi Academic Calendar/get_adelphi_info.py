@@ -9,8 +9,8 @@ class AdelphiInfo:
     def __init__(self):
         """Initializes the class."""
         self.url = "https://registrar.adelphi.edu/academic-calendar/"
-        self.filename = "data/calendar_data.txt"
-        self.filename_json = "data/adelphi_calendar.json"
+        self.filename = "/tmp/calendar_data.txt"
+        self.filename_json = "/tmp/adelphi_calendar.json"
         self.create_text_file()
 
     def create_text_file(self):
@@ -27,7 +27,7 @@ class AdelphiInfo:
 
         parsed_data = list()
         for element in data:
-            if element.startswith(' '):     # Parses data even more
+            if element.startswith(' '):     # Parses tmp even more
                 parsed_data.append(element)     # Appends to the parsed_data
 
         self.create_json_file(parsed_data)
