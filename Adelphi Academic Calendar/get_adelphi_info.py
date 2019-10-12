@@ -75,7 +75,7 @@ class AdelphiInfo:
         # Creates a dictionary, each date is a key, and each event is a value corresponding to that key
 
         for index in range(len(dates_with_year)):
-            date_events_dict[dates_with_year[index]] = events[index]
+            date_events_dict[events[index]] = dates_with_year[index]
 
         with open(self.filename_json, 'w') as f:
             json.dump(date_events_dict, f, indent=4)
