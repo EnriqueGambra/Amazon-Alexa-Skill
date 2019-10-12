@@ -77,5 +77,10 @@ class AdelphiInfo:
         for index in range(len(dates_with_year)):
             date_events_dict[events[index]] = dates_with_year[index]
 
+        for key, value in date_events_dict.items():
+            if key.count("-") > 0:
+                new_key = key.replace("-", "for")
+                date_events_dict[new_key] = date_events_dict.pop(key)
+
         with open(self.filename_json, 'w') as f:
             json.dump(date_events_dict, f, indent=4)
