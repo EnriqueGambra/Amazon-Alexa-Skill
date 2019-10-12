@@ -56,7 +56,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 get_json = AdelphiInfo()
-filename = "/tmp/adelphi_calendar.json"
+filename = "tmp/adelphi_calendar.json"
 
 
 class LaunchRequestHandler(AbstractRequestHandler):

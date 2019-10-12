@@ -9,8 +9,8 @@ class AdelphiInfo:
     def __init__(self):
         """Initializes the class."""
         self.url = "https://registrar.adelphi.edu/academic-calendar/"
-        self.filename = "/tmp/calendar_data.txt"
-        self.filename_json = "/tmp/adelphi_calendar.json"
+        self.filename = "tmp/calendar_data.txt"
+        self.filename_json = "tmp/adelphi_calendar.json"
         self.create_text_file()
 
     def create_text_file(self):
