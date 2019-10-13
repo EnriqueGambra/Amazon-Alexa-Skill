@@ -10,7 +10,7 @@ class AdelphiInfo:
         """Initializes the class."""
         self.url = "https://registrar.adelphi.edu/academic-calendar/"
         self.filename = "tmp/calendar_data.txt"
-        self.filename_json = "tmp/adelphi_calendar.json"
+        self.filename_json = "tmp/adelphi_calendar2.json"
         self.create_text_file()
 
     def create_text_file(self):
@@ -78,9 +78,14 @@ class AdelphiInfo:
             date_events_dict[events[index]] = dates_with_year[index]
 
         for key, value in date_events_dict.items():
-            if key.count("-") > 0:
+            if key.count("-") > 0 or key.count(" - ") > 0:
                 new_key = key.replace("-", "for")
+                new_key = new_key.replace(" - ", "for")
                 date_events_dict[new_key] = date_events_dict.pop(key)
+
+        for key, value in date_events_dict.items():
+            new_key = key.lower()
+            date_events_dict[new_key] = date_events_dict.pop(key)
 
         with open(self.filename_json, 'w') as f:
             json.dump(date_events_dict, f, indent=4)
