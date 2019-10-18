@@ -1,0 +1,21 @@
+Changes need to be made to the JSON file in order for utterances to make more sense,
+these utterances aren't grammatically correct:
+1) research day for no classes 
+2) martin luther king jr. day for no classes
+3) last day to add an independent study/internship for spring 2020
+4) commencement -- ??? I don't know if we should change this...
+5) memorial day for no classes
+6) first day of classes for summer i 2020 -- should be changed to "first day of classes for summer first term 2020
+7) last day to add a course for summer i 2020
+8) last day to drop a course for summer i 2020
+9) last day to withdraw from a course for summer i 2020
+10) last day of classes for summer i 2020
+11) independence day (celebrated) for no classes
+12) first day of classes for summer ii 2020
+13) last day to add a course for summer ii 2020
+14) last day to drop a course for summer ii 2020
+15) last day to withdraw from a course for summer ii 2020
+16) last day of classes for summer ii 2020 and full summer session
+
+Also, we need to change the values within the JSON file that contain the word first and change
+it to 1st
