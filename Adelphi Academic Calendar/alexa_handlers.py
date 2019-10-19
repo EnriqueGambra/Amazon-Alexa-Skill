@@ -18,34 +18,17 @@ from get_adelphi_info import AdelphiInfo
 # =========================================================================================================================================
 # TODO: The items below this comment need your attention.
 # =========================================================================================================================================
-SKILL_NAME = "Space Facts"
-GET_FACT_MESSAGE = "Here's your fact: "
-HELP_MESSAGE = "You can say tell me a space fact, or, you can say exit... What can I help you with?"
+SKILL_NAME = "Adelphi Calendar"
+HELP_MESSAGE = "You can ask me a question about the Adelphi Calendar, or, you can say exit... What can I help you with?"
 HELP_REPROMPT = "What can I help you with?"
 STOP_MESSAGE = "Goodbye!"
-FALLBACK_MESSAGE = "The Space Facts skill can't help you with that.  It can help you discover facts about space if you say tell me a space fact. What can I help you with?"
+FALLBACK_MESSAGE = "The Adelphi Calendar skill can't help you with that. Please ask another question"
 FALLBACK_REPROMPT = 'What can I help you with?'
 EXCEPTION_MESSAGE = "Sorry. I cannot help you with that."
 
 # =========================================================================================================================================
 # TODO: Replace this data with your own.  You can find translations of this data at http://github.com/alexa/skill-sample-python-fact/lambda/data
 # =========================================================================================================================================
-
-data = [
-    'A year on Mercury is just 88 days long.',
-    'Despite being farther from the Sun, Venus experiences higher temperatures than Mercury.',
-    'Venus rotates counter-clockwise, possibly because of a collision in the past with an asteroid.',
-    'On Mars, the Sun appears about half the size as it does on Earth.',
-    'Earth is the only planet not named after a god.',
-    'Jupiter has the shortest day of all the planets.',
-    'The Milky Way galaxy will collide with the Andromeda Galaxy in about 5 billion years.',
-    'The Sun contains 99.86% of the mass in the Solar System.',
-    'The Sun is an almost perfect sphere.',
-    'A total solar eclipse can happen once every 1 to 2 years. This makes them a rare event.',
-    'Saturn radiates two and a half times more energy into space than it receives from the sun.',
-    'The temperature inside the Sun can reach 15 million degrees Celsius.',
-    'The Moon is moving approximately 3.8 cm away from our planet every year.',
-]
 
 # =========================================================================================================================================
 # Editing anything below this line might break your skill.
@@ -56,7 +39,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 get_json = AdelphiInfo()
-filename = "tmp/adelphi_calendar.json"
+filename = "/tmp/adelphi_calendar2.json"
 
 
 class LaunchRequestHandler(AbstractRequestHandler):
@@ -89,8 +72,14 @@ class AdelphiCalendarIntentHandler(AbstractRequestHandler):
         with open(filename) as f:
             calendar_info_dict = json.load(f)
 
-        print(handler_input.event.request.intent.name)  # This is the line causing problems...
-        speech_text = ""
+        # data_json = get_slot_value(handler_input, value)
+        # print(handler_input.request_envelope.request.intent.slots['CALENDAR_INFO'].value)
+        # print(calendar_info_dict)
+        utterance = handler_input.request_envelope.request.intent.slots['CALENDAR_INFO'].value
+        # print("Utterance = " + utterance)
+        speech_text = calendar_info_dict[utterance]
+        # print("Speech text = " + speech_text)
+
         handler_input.response_builder.speak(speech_text).set_card(
             SimpleCard("Hello World", speech_text)).set_should_end_session(
             True)
@@ -98,24 +87,6 @@ class AdelphiCalendarIntentHandler(AbstractRequestHandler):
 
 
 # Built-in Intent Handlers
-class GetNewFactHandler(AbstractRequestHandler):
-    """Handler for Skill Launch and GetNewFact Intent."""
-
-    def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
-        return (is_request_type("LaunchRequest")(handler_input) or
-                is_intent_name("GetNewSpaceFactIntent")(handler_input))
-
-    def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
-        logger.info("In GetNewFactHandler")
-
-        random_fact = random.choice(data)
-        speech = GET_FACT_MESSAGE + random_fact
-
-        handler_input.response_builder.speak(speech).set_card(
-            SimpleCard(SKILL_NAME, random_fact))
-        return handler_input.response_builder.response
 
 
 class HelpIntentHandler(AbstractRequestHandler):
@@ -230,7 +201,6 @@ class ResponseLogger(AbstractResponseInterceptor):
 # Register intent handlers
 sb.add_request_handler(LaunchRequestHandler())
 sb.add_request_handler(AdelphiCalendarIntentHandler())
-sb.add_request_handler(GetNewFactHandler())
 sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(CancelOrStopIntentHandler())
 sb.add_request_handler(FallbackIntentHandler())

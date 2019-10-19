@@ -124,7 +124,7 @@ class AdelphiInfo:
             else:
                 date_events_dict[key] = dates_with_year[index]
 
-            new_dict = self._replace_first_1st(date_events_dict) # Replaces first with 1st
+            new_dict = self._replace_first_1st(date_events_dict)  # Replaces first with 1st
 
         return new_dict
 
