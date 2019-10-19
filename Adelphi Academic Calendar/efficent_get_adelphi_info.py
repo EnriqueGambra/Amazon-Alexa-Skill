@@ -35,16 +35,8 @@ class AdelphiInfo:
     def create_json_file(self, data):
         """Creates the JSON file"""
         # Cleans up the code even more, getting rid of whitespace, double // and other strings
-        more_parsed = list()
-        for element in data:
-            data_parsed = element.strip()
-            more_refined = data_parsed.replace("\\", "")
-            even_more_refined = more_refined.replace("n'b'", "")
-            clean = even_more_refined.strip()
-            clean = clean.lower()
-            more_parsed.append(clean)       # Appended to an even more refined list
+        more_parsed = self._clean_up_text(data)
 
-        # Create two lists, one for dates and the other for events
         dates = list()
         events = list()
 
@@ -57,6 +49,31 @@ class AdelphiInfo:
                     or more_parsed[index].startswith("october") or more_parsed[index].startswith("november") or more_parsed[index].startswith("december"):
                 dates.append(more_parsed[index])
                 events.append(more_parsed[index+1])
+
+        dates_with_year = self._combine_dates_with_year(dates) # Calls upon the dates_with_year helper method
+
+        date_events_dict = self._combine_date_events(dates_with_year, events)
+
+        # Create the JSON file
+        with open(self.filename_json, 'w') as f:
+            json.dump(date_events_dict, f, indent=4)
+
+    def _clean_up_text(self, data):
+        """Cleans up the text more, gets rid of backslashes and other html encodings"""
+        more_parsed = list()
+        for element in data:
+            data_parsed = element.strip()
+            more_refined = data_parsed.replace("\\", "")
+            even_more_refined = more_refined.replace("n'b'", "")
+            clean = even_more_refined.strip()
+            clean = clean.lower()
+            more_parsed.append(clean)       # Appended to an even more refined list
+
+        return more_parsed
+
+    def _combine_dates_with_year(self, dates):
+        """Helper method that will combine the dates with the year"""
+        # Create two lists, one for dates and the other for events
 
         dates_with_year = list()  # Creates a new list that will have the dates with year
         year = 2019     # The year we start at, 2019 needs to be fixed where it allows the program to be reusable, but for now its hardcoded in
@@ -72,6 +89,10 @@ class AdelphiInfo:
                 is_new_year = False
             dates_with_year.append(f'{date} {year}')
 
+        return dates_with_year
+
+    def _combine_date_events(self, dates_with_year, events):
+        """Helper method that creates a dictionary with each event corresponding to correct date"""
         date_events_dict = dict()
 
         semesters = ['fall 2019', 'spring 2020']
@@ -103,8 +124,8 @@ class AdelphiInfo:
             else:
                 date_events_dict[key] = dates_with_year[index]
 
-        with open(self.filename_json, 'w') as f:
-            json.dump(date_events_dict, f, indent=4)
+        return date_events_dict
+
 
 
 get_json = AdelphiInfo()
