@@ -44,7 +44,7 @@ class AdelphiInfo:
             clean = clean.lower()
             more_parsed.append(clean)       # Appended to an even more refined list
 
-        print(more_parsed)
+
         # Create two lists, one for dates and the other for events
         dates = list()
         events = list()
@@ -88,11 +88,18 @@ class AdelphiInfo:
                     updated_key = key + " for " + semesters[1]
                     count += 1
                 date_events_dict[updated_key] = dates_with_year[index]
+            elif key.find(" i ") is not -1 or key.find(" ii ") is not -1:
+                if key.find(" i ") is not -1:
+                    updated_key = key.replace(" i ", " first term ")
+                elif key.find(" ii ") is not -1:
+                    updated_key = key.replace(" ii ", " second term ")
+                date_events_dict[updated_key] = dates_with_year[index]
             else:
                 date_events_dict[key] = dates_with_year[index]
 
         with open(self.filename_json, 'w') as f:
             json.dump(date_events_dict, f, indent=4)
+
 
 
 get_json = AdelphiInfo()
