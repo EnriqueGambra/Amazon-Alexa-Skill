@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9bde7a17-5d73-4549-9771-a3892e6a51f5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/efficent_get_adelphi_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/efficent_get_adelphi_info.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmp/adelphi_calendar2.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/efficent_get_adelphi_info.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/get_adelphi_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/get_adelphi_info.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,10 +13,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/alexa_handlers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="663">
+            <state relative-caret-position="867">
               <caret line="51" column="18" selection-start-line="51" selection-start-column="18" selection-end-line="51" selection-end-column="18" />
               <folding>
                 <element signature="e#55#68#0" expanded="true" />
@@ -28,19 +28,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/get_adelphi_info.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="148">
-              <caret line="63" column="26" lean-forward="true" selection-start-line="63" selection-start-column="26" selection-end-line="63" selection-end-column="26" />
-              <folding>
-                <element signature="e#0#21#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/efficent_get_adelphi_info.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-965">
+            <state relative-caret-position="952">
               <caret line="56" column="30" selection-start-line="56" selection-start-column="30" selection-end-line="56" selection-end-column="30" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
@@ -157,7 +145,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.efficent_get_adelphi_info">
+  <component name="RunManager" selected="Python.alexa_handlers">
     <configuration name="alexa_handlers" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Adelphi Academic Calendar" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -191,7 +179,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/efficent_get_adelphi_info.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\Owner\github-Repos\Amazon-Alexa-Skill\Adelphi Academic Calendar\get_adelphi_info.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -244,8 +232,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.efficent_get_adelphi_info" />
         <item itemvalue="Python.alexa_handlers" />
+        <item itemvalue="Python.efficent_get_adelphi_info" />
         <item itemvalue="Python.test_getting_info" />
         <item itemvalue="Python.get_adelphi_info" />
       </list>
@@ -268,12 +256,12 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24983476" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24983476" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3286119" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3286119" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3286119" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -298,16 +286,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tmp/adelphi_calendar.json" />
-    <entry file="file://$PROJECT_DIR$/alexa_handlers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="51" column="18" selection-start-line="51" selection-start-column="18" selection-end-line="51" selection-end-column="18" />
-          <folding>
-            <element signature="e#55#68#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tmp/calendar_data.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -321,16 +299,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/get_adelphi_info.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="63" column="26" lean-forward="true" selection-start-line="63" selection-start-column="26" selection-end-line="63" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tmp/adelphi_calendar2.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="833">
@@ -338,12 +306,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/efficent_get_adelphi_info.py">
+    <entry file="file://$PROJECT_DIR$/get_adelphi_info.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-965">
+        <state relative-caret-position="372">
+          <caret line="81" column="49" lean-forward="true" selection-start-line="81" selection-start-column="49" selection-end-line="81" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/get_adelphi_info.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="952">
           <caret line="56" column="30" selection-start-line="56" selection-start-column="30" selection-end-line="56" selection-end-column="30" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alexa_handlers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="867">
+          <caret line="51" column="18" selection-start-line="51" selection-start-column="18" selection-end-line="51" selection-end-column="18" />
+          <folding>
+            <element signature="e#55#68#0" expanded="true" />
           </folding>
         </state>
       </provider>
