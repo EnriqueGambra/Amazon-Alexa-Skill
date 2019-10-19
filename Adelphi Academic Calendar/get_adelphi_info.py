@@ -124,8 +124,16 @@ class AdelphiInfo:
             else:
                 date_events_dict[key] = dates_with_year[index]
 
+            new_dict = self._replace_first_1st(date_events_dict) # Replaces first with 1st
+
+        return new_dict
+
+    def _replace_first_1st(self, date_events_dict):
+        """Helper method that will replace keys with the word first with 1st"""
+        for key in date_events_dict.keys():
+            if key.find("first") is not -1:
+                new_key = key.replace("first", "1st")
+                date_events_dict[new_key] = date_events_dict[key]
+                del date_events_dict[key]
+
         return date_events_dict
-
-
-
-get_json = AdelphiInfo()
