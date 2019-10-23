@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """Simple fact sample app."""
 
-import random
+from datetime import date
+from datetime import timedelta
 import logging
 import json
 from ask_sdk_core.skill_builder import SkillBuilder
@@ -41,6 +42,44 @@ logger.setLevel(logging.DEBUG)
 get_json = AdelphiInfo()
 filename = "/tmp/adelphi_calendar2.json"
 
+month_num_dict = {
+    'january': 1,
+    'february': 2,
+    'march': 3,
+    'april': 4,
+    'may': 5,
+    'june': 6,
+    'july': 7,
+    'august': 8,
+    'september': 9,
+    'october': 10,
+    'november': 11,
+    'december': 12
+}
+
+num_month_dict = {
+    '01': 'january',
+    '02': 'february',
+    '03': 'march',
+    '04': 'april',
+    '05': 'may',
+    '06': 'june',
+    '07': 'july',
+    '08': 'august',
+    '09': 'september',
+    '10': 'october',
+    '11': 'november',
+    '12': 'december',
+}
+
+with open(filename) as f:
+    calendar_info_dict = json.load(f)
+
+date_event_dict = dict()
+
+for key, value in calendar_info_dict.items():
+    date_event_dict[value] = key
+
 
 class LaunchRequestHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
@@ -67,10 +106,6 @@ class AdelphiCalendarIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type (HandlerInput) -> Response
-        calendar_info_dict = dict()
-
-        with open(filename) as f:
-            calendar_info_dict = json.load(f)
 
         # data_json = get_slot_value(handler_input, value)
         # print(handler_input.request_envelope.request.intent.slots['CALENDAR_INFO'].value)
@@ -86,8 +121,79 @@ class AdelphiCalendarIntentHandler(AbstractRequestHandler):
         return handler_input.response_builder.response
 
 
-# Built-in Intent Handlers
+class DaysUntilIntentHandler(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        # type (HandlerInput) -> bool
 
+        # Checks to see if the intent name is 'HelloWorldIntent' returns true if it is
+        return is_intent_name("DaysUntilIntent")(handler_input)
+
+    def handle(self, handler_input):
+        # type (HandlerInput) -> Response
+        utterance = handler_input.request_envelope.request.intent.slots['CALENDAR_INFO'].value
+        event_date = calendar_info_dict[utterance]
+
+        if event_date.find('-') is not -1:
+            month_date_list = event_date.split('-')
+            month_day = month_date_list[0]
+            year = event_date[len(event_date) - 4:]
+            event_date = month_day + ' ' + year
+        today = date.today()
+
+        month_day_year = event_date.split(" ")
+
+        month = month_num_dict.get(month_day_year[0])
+        day = month_day_year[1]
+        year = month_day_year[2]
+
+        future = date(int(year), month, int(day))
+        days_until = future - today
+
+        if(str(days_until).find('-')) is not -1:
+            speech_text = "Event already passed on " + event_date
+        else:
+            days_until_list = str(days_until).split(" ")
+            days_left = days_until_list[0]
+            speech_text = "Event is in " + str(days_left) + " days"
+
+        handler_input.response_builder.speak(speech_text).set_card(
+            SimpleCard("Hello World", speech_text)).set_should_end_session(
+            True)
+        return handler_input.response_builder.response
+
+
+class NextEventIntentHandler(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        # type (HandlerInput) -> bool
+
+        # Checks to see if the intent name is 'NextEventIntent' returns true if it is
+        return is_intent_name("NextEventIntent")(handler_input)
+
+    def handle(self, handler_input):
+        # type (HandlerInput) -> Response
+        today = date.today()
+        day_counter = 0
+        while True:
+            next_date = today + timedelta(days=day_counter)
+            year_month_day = str(next_date).split("-")
+            year = year_month_day[0]
+            month = year_month_day[1]
+            day = year_month_day[2]
+
+            converted_date = f'{num_month_dict.get(month)} {day} {year}'
+            if converted_date in date_event_dict:
+                next_event = date_event_dict[converted_date]
+                date_of_event = calendar_info_dict[next_event]
+                speech_text = f'The next event is {next_event} and it is on {date_of_event}'
+                break
+            day_counter += 1
+
+        handler_input.response_builder.speak(speech_text).set_card(
+            SimpleCard("Hello World", speech_text)).set_should_end_session(
+            True)
+        return handler_input.response_builder.response
+
+# Built-in Intent Handlers
 
 class HelpIntentHandler(AbstractRequestHandler):
     """Handler for Help Intent."""
@@ -201,6 +307,8 @@ class ResponseLogger(AbstractResponseInterceptor):
 # Register intent handlers
 sb.add_request_handler(LaunchRequestHandler())
 sb.add_request_handler(AdelphiCalendarIntentHandler())
+sb.add_request_handler(DaysUntilIntentHandler())
+sb.add_request_handler(NextEventIntentHandler())
 sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(CancelOrStopIntentHandler())
 sb.add_request_handler(FallbackIntentHandler())
